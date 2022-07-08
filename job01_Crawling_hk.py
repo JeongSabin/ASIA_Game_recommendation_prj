@@ -11,11 +11,12 @@ options = webdriver.ChromeOptions()
 options.add_argument('lang=ko_KR')
 driver = webdriver.Chrome('./chromedriver.exe', options=options)
 
+#경고창 무시
 warnings.filterwarnings('ignore')
 
 text_list = []
 
-for i in range(1, 5):
+for i in range(91, 101):
     driver.get('https://store.steampowered.com/?l=koreana')
     time.sleep(1)
     driver.find_element("link text", '신규 및 특집').click()
@@ -23,8 +24,11 @@ for i in range(1, 5):
     driver.find_element("link text", '최고 인기 제품').click()
     time.sleep(1)
 
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-    time.sleep(1)
+    for f in range(16) :
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(0.1)
+
+
     try:
         driver.find_element("css selector", '#search_resultsRows > a:nth-child({}) > div.responsive_search_name_combined > div.col.search_name.ellipsis > span'.format(i)).click()
         time.sleep(1)
@@ -73,11 +77,11 @@ for i in range(1, 5):
         end = start + datetime.timedelta(seconds=Seconds)
         while True:
             driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-            time.sleep(1)
+            time.sleep(0.1)
             if datetime.datetime.now() > end:
                 break
 
-    doScrollDown(1000)
+    doScrollDown(100)
 
     elements = driver.find_elements("css selector", '.apphub_CardTextContent')
 
@@ -87,4 +91,4 @@ for i in range(1, 5):
     print('rank=', i)
 
 df = pd.DataFrame({'title': titles, 'reviews': text_list})
-df.to_csv('./reviews.csv', index=False)
+df.to_csv('./reviews_91_100.csv', index=False)
