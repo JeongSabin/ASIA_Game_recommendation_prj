@@ -77,7 +77,7 @@ for i in range(101,131):
             if datetime.datetime.now() > end:
                 break
 
-    doScrollDown(3)
+    doScrollDown(100)
 
     elements = driver.find_elements("css selector", '.apphub_CardTextContent')
 
