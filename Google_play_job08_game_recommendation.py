@@ -16,8 +16,8 @@ def getRecommendation(cosin_sim):
 
 
 df_reviews = pd.read_csv('./google_play_data/google_play_cleaned_review_one_2.csv')
-Tfidf_matrix = mmread('./models/Tfidf_game_review.mtx').tocsr()
-with open('./models/tfidf.pickle', 'rb') as f:
+Tfidf_matrix = mmread('./Google_play_models/Tfidf_game_review.mtx').tocsr()
+with open('google_play_models/tfidf.pickle', 'rb') as f:
     Tfidf = pickle.load(f)
 
 # 영화 제목 / index를 이용
@@ -28,7 +28,7 @@ recommendation = getRecommendation(cosine_sim)
 print(recommendation[1:11])
 
 # keyword 이용
-# embedding_model = Word2Vec.load('./models/word2vec_google_play_reviews_2.model')
+# embedding_model = Word2Vec.load('./Google_play_models/word2vec_google_play_reviews_2.model')
 # keyword = '자동차'
 # sim_word = embedding_model.wv.most_similar(keyword, topn=10)
 # words = [keyword]

@@ -16,6 +16,6 @@ print(cleaned_tokens[0])
 embedding_model = Word2Vec(cleaned_tokens, vector_size=100,
                            window=4, min_count=20,
                            workers=8, epochs=100, sg=1)
-embedding_model.save('./models/word2vec_google_play_reviews.model')
+embedding_model.save('./Google_play_models/word2vec_google_play_reviews.model')
 print(list(embedding_model.wv.index_to_key))
 print(len(embedding_model.wv.index_to_key))

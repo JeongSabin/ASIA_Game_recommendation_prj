@@ -12,7 +12,7 @@ print(Tfidf_matrix.shape)
 # (3182, 84461)
 print(Tfidf_matrix[0].shape)
 # (1, 84461)
-with open('./models/tfidf.pickle', 'wb') as f:
+with open('google_play_models/tfidf.pickle', 'wb') as f:
     pickle.dump(Tfidf, f)
 
-mmwrite('./models/Tfidf_game_review.mtx', Tfidf_matrix)
+mmwrite('./Google_play_models/Tfidf_game_review.mtx', Tfidf_matrix)
