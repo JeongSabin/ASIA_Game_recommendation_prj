@@ -48,9 +48,11 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
         category_cnt += 1
         game_cnt = 0
         game_flag = True
+        print('category change')
 
         while game_flag:
             try:
+                print('game change')
                 game_cnt += 1
                 #             //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[3]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div/a/div[2]/div/div[1]/span
                 game_path = f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[{game_cnt}]/div/div/div/a/div[2]/div/div[1]/span'
@@ -126,14 +128,15 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                     print('debug0')
                     actions.move_to_element(mouse_on).perform()
                     driver.find_element('xpath',
-                        f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[2]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i').click()
+                        f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i').click()
                     time.sleep(0.4)
                 except NoSuchElementException:
                     category_flag = False
                     print('다음 카테고리 크롤링으로 넘어갑니다')
                     df = pd.DataFrame({'game': titles, 'review': reviews})
                     df.to_csv(f'./reviews_category_{category_cnt}.csv', index=False)
-
+# //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[2]/c-wiz/section/div/div/div/div/div[3]/button/span[2]/i
+# //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[3]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i
         df = pd.DataFrame({'game': titles, 'review': reviews})
         df.to_csv(f'./reviews_category_{category_cnt}_bibbidibobbidiboo.csv', index=False)
     except NoSuchElementException:

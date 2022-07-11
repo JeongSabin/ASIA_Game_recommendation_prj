@@ -94,13 +94,22 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                 try:
                     while crawling_flag:
                         crawling_cnt += 1
+                        driver.find_element_by_xpath('//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[1]/div[1]').click()
                         # 리뷰 긁기
                         try:
                             review_xpath = f'//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[{crawling_cnt}]/div[1]'
                             review = driver.find_element('xpath', review_xpath).text
                             if len(review) > 30:
                                 reviews.append(review)
+                                print(review)
+                                print(crawling_cnt)
+                                print()
                         except:
+                            mouse_on = driver.find_element_by_xpath(
+                                f'//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]')
+                            print('debug0')
+                            actions.move_to_element(mouse_on).perform()
+
                             # 페이지 하단으로 스크롤
                             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 

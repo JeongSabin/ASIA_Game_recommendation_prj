@@ -63,7 +63,6 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                     game_path = f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[{game_cnt}]/div/div/div/a/div[2]/div/div[1]/span'
                 games.append(driver.find_element_by_xpath(game_path).text)
                 driver.find_element_by_xpath(game_path).click()
-
                 # 화면 맨 밑으로 휠 내리기
                 for i in range(100):
                     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
@@ -80,16 +79,10 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                 crawling_flag = True
                 crawling_cnt = 0
 
-                for i in range(100):
-                    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-                time.sleep(0.2)
-
-
                 # 크롤링
                 try:
                     while crawling_flag:
                         crawling_cnt += 1
-
                         # 리뷰 긁기
                         try:
                             review_xpath = f'//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[{crawling_cnt}]/div[1]'
