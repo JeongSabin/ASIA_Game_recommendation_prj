@@ -23,9 +23,13 @@ wait = WebDriverWait(driver, 5)
 driver.get(url)
 
 def scroll(modal):
-    try:
-        driver.execute_script('arguments[0].scrollBy(0, +100);', modal)
+    #//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div
 
+    #//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[220]/div[1]
+    #//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[219]/div[1]
+    try:
+        driver.execute_script('arguments[0].scrollBy(0, +100000)', modal)
+        # driver.execute_script('arguments[0].scrollTo(0, 1080)', modal)
 
     except Exception as e:
         print("에러 발생: ", e)
@@ -41,19 +45,19 @@ titles = []
 reviews = []
 
 # 카테고리 번호
-category_cnt = 2
+category_cnt = 7
 category_flag = True
 while category_flag:  # 카테고리 번호 순서대로 크롤링
     try:
         category_cnt += 1
-        game_cnt = 0
+        game_cnt = 8
         game_flag = True
-        print('category change')
-
+        button_click_cnt = 1
         while game_flag:
             try:
-                print('game change')
                 game_cnt += 1
+                titles = []
+                reviews = []
                 #             //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[3]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div/a/div[2]/div/div[1]/span
                 game_path = f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[{game_cnt}]/div/div/div/a/div[2]/div/div[1]/span'
                 try:
@@ -91,31 +95,40 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                 try:
                     while crawling_flag:
                         modal = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, f"//div[@class='fysCi']")))
-                        scroll(modal)
+                        if crawling_cnt < 30:
+                            scroll(modal)
+                        else:
+                            pass
                         crawling_cnt += 1
+
                         # 리뷰 긁기
-                        # try:
-                        review_xpath = f'//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[{crawling_cnt}]/div[1]'
-                        review = driver.find_element('xpath', review_xpath).text
-                        #     if len(review) > 30:
-                        reviews.append(review)
-                        titles.append(game_title)
-                        print(game_title)
-                        print(review)
-                        # except:
-                        #     # 페이지 하단으로 스크롤
-                        #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                        try:
+                            review_xpath = f'//*[@id="yDmH0d"]/div[5]/div[2]/div/div/div/div/div[2]/div/div[1]/div[{crawling_cnt}]/div[1]'
+                            review = driver.find_element('xpath', review_xpath).text
+                            if len(review) > 30:
+                                reviews.append(review)
+                                titles.append(game_title)
+
+                            print(game_title)
+                            print(review)
+                            print(crawling_cnt)
+                        except:
+                            # 페이지 하단으로 스크롤
+                            scroll(modal)
                         #
+
                         #     # 페이지 로딩 대기
-                        time.sleep(SCROLL_PAUSE_TIME)
+                            time.sleep(5)
 
                         # 이전 페이지 하단 좌표와 현재 페이지 하단 좌표 비교
-                        new_height = driver.execute_script("return document.body.scrollHeight")
-                        if new_height == last_height:
-                            driver.back()
-                            driver.back()
-                            break
-                        last_height = new_height
+                            new_height = driver.execute_script("return document.body.scrollHeight")
+                            if new_height == last_height:
+                                driver.back()
+                                driver.back()
+                                df = pd.DataFrame({'game': titles, 'review': reviews})
+                                df.to_csv(f'./reviews_category_{category_cnt}_{game_cnt}.csv', index=False)
+                                break
+                            last_height = new_height
                 except NoSuchElementException:
                     crawling_flag = False
 
@@ -123,20 +136,29 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
             except NoSuchElementException:
                 try:
                     # 마우스 올리기
+                    game_cnt -= 2
                     mouse_on = driver.find_element('xpath',
-                        f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div')
-                    print('debug0')
+                                                   f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div')
                     actions.move_to_element(mouse_on).perform()
-                    driver.find_element('xpath',
-                        f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i').click()
-                    time.sleep(0.4)
+                    for i in range(button_click_cnt):
+                        if button_click_cnt >=2:
+                            driver.find_element('xpath',
+                                                f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[3]/button/span[2]/i').click()
+                        else:
+                            driver.find_element('xpath',
+                                                f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i').click()
+                        time.sleep(1)
+                    button_click_cnt += 1
+
+                    print(game_cnt)
+                    print(button_click_cnt)
+
                 except NoSuchElementException:
                     category_flag = False
                     print('다음 카테고리 크롤링으로 넘어갑니다')
                     df = pd.DataFrame({'game': titles, 'review': reviews})
                     df.to_csv(f'./reviews_category_{category_cnt}.csv', index=False)
-# //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[2]/c-wiz/section/div/div/div/div/div[3]/button/span[2]/i
-# //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[3]/c-wiz/section/div/div/div/div/div[2]/button/span[2]/i
+
         df = pd.DataFrame({'game': titles, 'review': reviews})
         df.to_csv(f'./reviews_category_{category_cnt}_bibbidibobbidiboo.csv', index=False)
     except NoSuchElementException:
