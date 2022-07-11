@@ -15,7 +15,7 @@ def getRecommendation(cosin_sim):
     return recMovieList
 
 
-df_reviews = pd.read_csv('./google_play_data/google_play_cleaned_review_one_2.csv')
+df_reviews = pd.read_csv('Google_play_data/google_play_cleaned_review_one_2.csv')
 Tfidf_matrix = mmread('./Google_play_models/Tfidf_game_review.mtx').tocsr()
 with open('google_play_models/tfidf.pickle', 'rb') as f:
     Tfidf = pickle.load(f)

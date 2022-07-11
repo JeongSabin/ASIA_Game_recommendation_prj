@@ -1,7 +1,7 @@
 import pandas as pd
 from gensim.models import Word2Vec
 
-review_word = pd.read_csv('./google_play_data/google_play_cleaned_review_one.csv')
+review_word = pd.read_csv('Google_play_data/google_play_cleaned_review_one.csv')
 review_word.info()
 
 cleaned_token_reviews = list(review_word['reviews'])

@@ -11,7 +11,7 @@ from PIL import Image
 rc('font', family='AppleGothic')
 plt.rcParams['axes.unicode_minus'] = False
 
-df = pd.read_csv('/Library/work/python/ASIA_Game_recommendation_prj/google_play_data/google_play_cleaned_review_one_2.csv')
+df = pd.read_csv('/Google_play_data/google_play_cleaned_review_one_2.csv')
 words = df[df['games']=='배틀그라운드']['reviews']
 print(words.iloc[0])
 words = words.iloc[0].split()

@@ -2,7 +2,7 @@ import pandas as pd
 from konlpy.tag import Okt
 import re
 
-df = pd.read_csv('./google_play_data/google_play_store_reviews.csv')
+df = pd.read_csv('Google_play_data/google_play_store_reviews.csv')
 df.info()
 #  #   Column   Non-Null Count  Dtype
 # ---  ------   --------------  -----
@@ -55,6 +55,6 @@ df['first_cleaned_reviews'] = first_cleaned_reviews
 df = df[['game', 'first_cleaned_reviews']]
 df.dropna(inplace=True)
 
-df.to_csv('./google_play_data/first_cleaned_google_play_reviews.csv', index=False)
+df.to_csv('./Google_play_data/first_cleaned_google_play_reviews.csv', index=False)
 print(df)
 df.info()
