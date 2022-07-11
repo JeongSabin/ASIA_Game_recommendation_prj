@@ -2,7 +2,7 @@ import pandas as pd
 import glob
 
 df = pd.DataFrame()
-data_paths = glob.glob('./reviews/*')
+data_paths = glob.glob('./google_play_data/*')
 
 for path in data_paths:
     df_temp = pd.read_csv(path)
@@ -14,4 +14,4 @@ for path in data_paths:
 df.drop_duplicates(inplace=True)
 df.info()
 
-df.to_csv('./reviews/reviews_steam_ranking_1_1000.csv', index=False)
+df.to_csv('./google_play_data/google_play_store_reviews.csv', index=False)
