@@ -45,12 +45,15 @@ titles = []
 reviews = []
 
 # 카테고리 번호
-category_cnt = 7
+category_cnt = 11
 category_flag = True
+for i in range(100):
+    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+time.sleep(1)
 while category_flag:  # 카테고리 번호 순서대로 크롤링
     try:
         category_cnt += 1
-        game_cnt = 8
+        game_cnt = 0
         game_flag = True
         button_click_cnt = 1
         while game_flag:
@@ -136,7 +139,7 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
             except NoSuchElementException:
                 try:
                     # 마우스 올리기
-                    game_cnt -= 2
+                    game_cnt -= 1
                     mouse_on = driver.find_element('xpath',
                                                    f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div')
                     actions.move_to_element(mouse_on).perform()
