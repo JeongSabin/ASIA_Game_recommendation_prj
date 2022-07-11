@@ -1,3 +1,4 @@
+#구글플레이 크롤링
 import pandas as pd
 from selenium.common.exceptions import NoSuchElementException
 import time
