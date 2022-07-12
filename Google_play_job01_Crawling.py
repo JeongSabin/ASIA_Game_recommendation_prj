@@ -43,9 +43,20 @@ last_height = driver.execute_script("return document.body.scrollHeight")
 # 리뷰랑 게임 제목 리스트
 titles = []
 reviews = []
-
+for i in range(100):
+    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+time.sleep(1)
+for i in range(100):
+    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+time.sleep(1)
+for i in range(100):
+    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+time.sleep(1)
+for i in range(100):
+    driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+time.sleep(1)
 # 카테고리 번호
-category_cnt = 4
+category_cnt = 20   #28
 category_flag = True
 while category_flag:  # 카테고리 번호 순서대로 크롤링
     try:
@@ -58,7 +69,7 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                 game_cnt += 1
                 titles = []
                 reviews = []
-                #             //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[3]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div/a/div[2]/div/div[1]/span
+                #             //*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[21]/c-wiz/section/div/div/div/div/div[1]/div[1]/div/div/div/a/div[2]/div/div[1]/span
                 game_path = f'//*[@id="yDmH0d"]/c-wiz[2]/div/div/div[1]/c-wiz/div/c-wiz/c-wiz[{category_cnt}]/c-wiz/section/div/div/div/div/div[1]/div[{game_cnt}]/div/div/div/a/div[2]/div/div[1]/span'
                 try:
                     game_title = driver.find_element('xpath', game_path).text
@@ -126,7 +137,7 @@ while category_flag:  # 카테고리 번호 순서대로 크롤링
                                 driver.back()
                                 driver.back()
                                 df = pd.DataFrame({'game': titles, 'review': reviews})
-                                df.to_csv(f'./reviews_category_{category_cnt}_{game_cnt}.csv', index=False)
+                                df.to_csv(f'./reviews_category_{category_cnt}_{game_cnt}_2.csv', index=False)
                                 break
                             last_height = new_height
                 except NoSuchElementException:

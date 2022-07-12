@@ -12,8 +12,8 @@ import matplotlib as mpl
 rc('font', family='AppleGothic')
 plt.rcParams['axes.unicode_minus'] = False
 
-embedding_model = Word2Vec.load('./Google_play_models/word2vec_google_play_reviews_2.model')
-key_word = '아케이드'
+embedding_model = Word2Vec.load('./Google_play_models/word2vec_google_play_reviews_google.model')
+key_word = ''
 sim_word = embedding_model.wv.most_similar(key_word, topn=10)
 print(sim_word)
 

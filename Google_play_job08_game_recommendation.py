@@ -15,21 +15,21 @@ def getRecommendation(cosin_sim):
     return recMovieList
 
 
-df_reviews = pd.read_csv('Google_play_data/google_play_cleaned_review_one_2.csv')
-Tfidf_matrix = mmread('./Google_play_models/Tfidf_game_review.mtx').tocsr()
-with open('google_play_models/tfidf.pickle', 'rb') as f:
+df_reviews = pd.read_csv('Google_play_data/google_play_cleaned_review_one_last.csv')
+Tfidf_matrix = mmread('./Google_play_models/Tfidf_game_review_google.mtx').tocsr()
+with open('google_play_models/tfidf_google.pickle', 'rb') as f:
     Tfidf = pickle.load(f)
 
-# 영화 제목 / index를 이용
-game_idx = df_reviews[df_reviews['games']=='배틀그라운드'].index[0]
-# gameidx = 1003
+# 게임 제목 / index를 이용
+game_idx = df_reviews[df_reviews['games']=='컴투스프로야구2022'].index[0] # gameidx = 1003
+
 cosine_sim = linear_kernel(Tfidf_matrix[game_idx], Tfidf_matrix)
 recommendation = getRecommendation(cosine_sim)
 print(recommendation[1:11])
 
 # keyword 이용
 # embedding_model = Word2Vec.load('./Google_play_models/word2vec_google_play_reviews_2.model')
-# keyword = '자동차'
+# keyword = '배틀그라운드'
 # sim_word = embedding_model.wv.most_similar(keyword, topn=10)
 # words = [keyword]
 # for word, _ in sim_word:
