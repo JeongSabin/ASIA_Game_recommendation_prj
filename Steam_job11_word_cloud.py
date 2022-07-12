@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-rc('font', family='LG PC.TTF')
+rc('font', family='LG_PC.TTF')
 plt.rcParams['axes.unicode_minus'] = False
 
 df = pd.read_csv('./Steam_data/steam_cleaned_review_one.csv')
@@ -21,7 +21,7 @@ worddict = collections.Counter(words)
 worddict = dict(worddict)
 print(worddict)
 
-wordcloud_img = WordCloud(background_color='white', max_words=2000, font_path='LG PC.TTF').generate_from_frequencies(worddict)
+wordcloud_img = WordCloud(background_color='white', max_words=2000, font_path='LG_PC.TTF').generate_from_frequencies(worddict)
 
 plt.figure(figsize=(12, 12))
 plt.imshow(wordcloud_img, interpolation='bilinear')
