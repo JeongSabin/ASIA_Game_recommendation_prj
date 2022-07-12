@@ -75,7 +75,7 @@ class Exam(QWidget, form_window):
     def getRecommendation(self, cosin_sim):
         simScore = list(enumerate(cosin_sim[-1]))
         simScore = sorted(simScore, key=lambda x: x[1], reverse=True)
-        simScore = simScore[:11]
+        simScore = simScore[:6]
         gameIdx = [i[0] for i in simScore]
         print(gameIdx)
         recGameList = self.df_reviews.iloc[gameIdx, 0]
@@ -169,7 +169,7 @@ class Exam(QWidget, form_window):
     def getRecommendation2(self, cosin_sim):
         simScore = list(enumerate(cosin_sim[-1]))
         simScore = sorted(simScore, key=lambda x: x[1], reverse=True)
-        simScore = simScore[:11]
+        simScore = simScore[:6]
         gameIdx = [i[0] for i in simScore]
         print(gameIdx)
         recGameList = self.df_reviews2.iloc[gameIdx, 0]
