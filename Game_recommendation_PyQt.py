@@ -25,18 +25,13 @@ class Exam(QWidget, form_window):
         with open('Google_play_models/tfidf_google.pickle', 'rb') as f:
             self.Tfidf = pickle.load(f)
         self.embedding_model = Word2Vec.load('./Google_play_models/word2vec_google_play_reviews_google.model')
-        self.df_reviews = pd.read_csv('./Steam_Google_concat_file/All_reviews_one')
+        self.df_reviews = pd.read_csv('./Google_play_data/google_play_cleaned_review_one_last.csv')
         self.titles = list(self.df_reviews['games'])
         self.titles.sort()  # 정렬하기
         # for title in self.titles:  # 3000개 title 가져오기
         #     self.comboBox.addItem(title)
 
 
-        model = QStringListModel()
-        model.setStringList(self.titles)
-        completer = QCompleter()
-        completer.setModel(model)
-        self.le_keyword.setCompleter(completer)
 
         # self.comboBox.currentIndexChanged.connect(self.combobox_slot)
         self.btn_recommendation_1.clicked.connect(self.btn_slot)
@@ -46,7 +41,19 @@ class Exam(QWidget, form_window):
         with open('./Steam_models/steam_tfidf.pickle', 'rb') as f:
             self.Tfidf2 = pickle.load(f)
         self.embedding_model2 = Word2Vec.load('./Steam_models/word2vec_steam_reviews.model')
+        self.df_reviews2 = pd.read_csv('./Steam_data/steam_cleaned_review_one.csv')
+        self.titles2 = list(self.df_reviews2['title'])
+        self.titles2.sort()  # 정렬하기
 
+        #자동완성
+        self.df_reviews3 = pd.read_csv('./Steam_Google_concat_file/All_reviews_one')
+        self.titles3 = list(self.df_reviews3['games'])
+        self.titles3.sort()  # 정렬하기
+        model = QStringListModel()
+        model.setStringList(self.titles3)
+        completer = QCompleter()
+        completer.setModel(model)
+        self.le_keyword.setCompleter(completer)
 
     def btn_slot(self):
         key_word = self.le_keyword.text()
@@ -54,10 +61,15 @@ class Exam(QWidget, form_window):
             recommendation = self.recommendation_by_game_title(key_word)
         elif key_word in list(self.embedding_model.wv.index_to_key):
             recommendation = self.recommendation_by_keyword(key_word)
+        elif key_word in self.titles2:
+            self.lbl_recommendation.setText('이 게임은 컴퓨터 게임이라 검색할 수 없어요 ㅠㅠ')
+            recommendation = False
         else:
             recommendation = self.recommendation_by_sentence(key_word)
         if recommendation:
             self.lbl_recommendation.setText(recommendation)
+        else:
+            pass
 
 
     def getRecommendation(self, cosin_sim):
@@ -142,10 +154,16 @@ class Exam(QWidget, form_window):
             recommendation2 = self.recommendation_by_game_title2(key_word)
         elif key_word in list(self.embedding_model2.wv.index_to_key):
             recommendation2 = self.recommendation_by_keyword2(key_word)
+        elif key_word in self.titles:
+            self.lbl_recommendation.setText('이 게임은 모바일 게임이라 검색할 수 없어요 ㅠㅠ')
+            recommendation2 = False
         else:
             recommendation2 = self.recommendation_by_sentence2(key_word)
+
         if recommendation2:
             self.lbl_recommendation.setText(recommendation2)
+        else:
+            pass
 
 
     def getRecommendation2(self, cosin_sim):
