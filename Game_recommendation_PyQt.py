@@ -46,15 +46,7 @@ class Exam(QWidget, form_window):
         with open('./Steam_models/steam_tfidf.pickle', 'rb') as f:
             self.Tfidf2 = pickle.load(f)
         self.embedding_model2 = Word2Vec.load('./Steam_models/word2vec_steam_reviews.model')
-        self.df_reviews2 = pd.read_csv('./Steam_data/steam_cleaned_review_one.csv')
-        self.titles2 = list(self.df_reviews2['title'])
-        self.titles2.sort()
 
-        model2 = QStringListModel()
-        model2.setStringList(self.titles2)
-        completer2 = QCompleter()
-        completer2.setModel(model2)
-        self.le_keyword.setCompleter(completer2)
 
     def btn_slot(self):
         key_word = self.le_keyword.text()
