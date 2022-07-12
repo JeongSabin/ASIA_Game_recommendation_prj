@@ -16,7 +16,7 @@ warnings.filterwarnings('ignore')
 title_list = []
 review_list = []
 
-for i in range(101,131):
+for i in range(91,101):
     driver.get('https://store.steampowered.com/?l=koreana')
     time.sleep(1)
     driver.find_element("link text", '신규 및 특집').click()
@@ -77,7 +77,7 @@ for i in range(101,131):
             if datetime.datetime.now() > end:
                 break
 
-    doScrollDown(3)
+    doScrollDown(100)
 
     elements = driver.find_elements("css selector", '.apphub_CardTextContent')
 
@@ -88,4 +88,4 @@ for i in range(101,131):
     print('rank=', i)
 
 df = pd.DataFrame({'title': title_list, 'reviews': review_list})
-df.to_csv('./data/reviews_101_130.csv', index=False)
+df.to_csv('./reviews/reviews_91_101.csv', index=False)
