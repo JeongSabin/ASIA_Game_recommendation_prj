@@ -4,7 +4,7 @@ import re
 from konlpy.tag import Komoran
 import konlpy
 
-df = pd.read_csv('./Steam_crawling_data/301_600/steam_clr1_501_600_001_HN02.csv')
+df = pd.read_csv('./Steam_data/steam_cleaned_review_one.csv')
 
 okt = Okt()
 # konlpy.jvm.init_jvm(jvmpath=None, max_heap_size=4096)
@@ -20,19 +20,19 @@ stopwords = stopwords + ['게임', '개새끼', '씨부랄', '지랄', '발작',
                          '출시', '안되다', '쓰브랄', '일기토', '개다', '뭣같음', '뭣같아', '개똥', '할인', '구매', '파일', '세이브', '시스템', '유저', '개색기', '쒸바', '플레이',
                          '겠다', '뒤지다', '버그', '제작자', '확장팩', '씨팔', '니미럴', '스팀', '라이브러리', '씨발련', '출시일', '좆망껨', '따먹다', '환불', '게이', '개자식',
                          '펑펑', '톡톡', '빵빵', '컴퓨터', '유료', '결재', '이메일', '로그인', '어떻다', '근데', '니당다', '계정', '던데', '광고', '태블렛', '로만', '현질', '알못',
-                         '빡종', '화면', '토핑같', '쫓아쥬', '게임광', '리뷰', '답변', '게암', '려고', '핸드폰', '아이폰', '딥빡', '시일', '같아뇨', '매크로', '팝업', '살수', '돵도']
+                         '빡종', '화면', '토핑같', '쫓아쥬', '게임광', '리뷰', '답변', '게암', '려고', '핸드폰', '아이폰', '딥빡', '시일', '같아뇨', '매크로', '팝업', '살수', '돵도', '시발롬']
 
 
 first_cleaned_reviews = []
 
-for review in df.review_clear1:
+for review in df.first_cleaned_reviews:
 
-    review = re.sub('[^가-힣 ]', ' ', review)
+    # review = re.sub('[^가-힣 ]', ' ', review)
     token = okt.pos(review, stem=True)
 
-    df_token = pd.DataFrame(token, columns=['word', 'class'])  #튜플형태 >> 컬럼 두개짜리 데이터프레임 으로 변환
-    df_token = df_token[(df_token['class']=='Noun') | (df_token['class']=='Verb') | (df_token['class']=='Adjective') | (df_token['class']=='Adverb')]
-    print(df_token)
+    df_token = pd.DataFrame(token, columns=['word', '1'])  #튜플형태 >> 컬럼 두개짜리 데이터프레임 으로 변환
+    # df_token = df_token[(df_token['class']=='Noun') | (df_token['class']=='Verb') | (df_token['class']=='Adjective') | (df_token['class']=='Adverb')]
+    # print(df_token)
     # exit()
 
     words =[]
@@ -47,6 +47,6 @@ df['first_cleaned_reviews'] = first_cleaned_reviews
 df = df[['title', 'first_cleaned_reviews']]
 df.dropna(inplace=True)
 
-df.to_csv('./Steam_crawling_data/301_600/steam_clr2_501_600_001_HN02.csv', index=False)
+df.to_csv('./Steam_data/steam_cleaned_review_one.csv', index=False)
 print(df)
 df.info()

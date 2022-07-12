@@ -13,9 +13,9 @@ df_reviews.info()
 Tfidf = TfidfVectorizer(sublinear_tf=True)
 Tfidf_matrix = Tfidf.fit_transform(df_reviews['first_cleaned_reviews'])
 print(Tfidf_matrix.shape)
-# (232, 39872)
+# (232, 37979)
 print(Tfidf_matrix[0].shape)
-# (1, 39872)
+# (1, 37979)
 with open('./Steam_models/steam_tfidf.pickle', 'wb') as f:
     pickle.dump(Tfidf, f)
 

@@ -37,7 +37,7 @@ with open('./Steam_models/steam_tfidf.pickle', 'rb') as f:
 
 # keyword 이용
 embedding_model = Word2Vec.load('./Steam_models/word2vec_steam_reviews.model')
-keyword = '레이싱'
+keyword = '좀비'
 sim_word = embedding_model.wv.most_similar(keyword, topn=10)
 words = [keyword]
 for word, _ in sim_word:
